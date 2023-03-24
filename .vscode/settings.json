@@ -1,0 +1,10 @@
+{
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": [
+    "--disable=C0111", // missing docstring
+    "--load-plugins",
+    "pylint_django",
+    "--django-settings-module=server.settings"
+  ]
+}
