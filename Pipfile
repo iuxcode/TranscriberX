@@ -6,6 +6,12 @@ name = "pypi"
 [packages]
 pylint-django = "*"
 pylint = "*"
+django-extensions = "*"
+django-rest-framework = "*"
+black = "*"
+djangorestframework-jsonapi = "*"
+djangorestframework = "*"
+django-filter = "*"
 
 [dev-packages]
 
