@@ -1,4 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager
+from server import settings
+from . import models
 
 
 class UserManager(BaseUserManager):
@@ -13,8 +15,20 @@ class UserManager(BaseUserManager):
         if not password:
             raise ValueError("User must have a password!")
 
+        subscription_plan = models.SubscriptionPlan.objects.get(
+            pk=settings.DEFAULT_SUBSCRIPTION_PLAN_ID
+        )
+        if not subscription_plan:
+            raise ValueError(
+                "Subscription plan with {settings.DEFAULT_SUBSCRIPTION_PLAN_ID} ID not found! Make sure there are existing plans!!!"
+            )
+
         email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+        user = self.model(
+            email=email,
+            subscription_plan=subscription_plan,
+            **extra_fields,
+        )
         user.set_password(password)
 
         user.save(using=self._db)
@@ -30,7 +44,7 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
 
         if extra_fields.get("is_staff") is not True:
-            raise ValueError("Superuser must have is_staff=True")
+            raise ValueError("Superuser must have is_staff=True.")
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True")
 

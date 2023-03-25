@@ -5,7 +5,7 @@ from django_extensions.db.models import TimeStampedModel
 
 class Transcription(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    user = models.ForeignKey("User", on_delete=models.CASCADE)
+    user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     audio_file = models.FileField(upload_to="audio_files/")
     transcription = models.TextField()
     start_time = models.DateTimeField()

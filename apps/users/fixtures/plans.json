@@ -1,0 +1,27 @@
+[
+    {
+        "pk": 1,
+        "model": "users.SubscriptionPlanFeature",
+        "fields": {
+            "title": "upload & transcribe",
+            "description": "feature",
+            "created": "2013-03-16T17:41:28+00:00",
+            "modified": "2013-03-16T17:41:28+00:00"
+        }
+    },
+
+    {
+        "model": "users.SubscriptionPlan",
+        "pk": 1,
+        "fields": {
+            "title": "basic",
+            "description": "Default subscription plan",
+            "price": 0,
+            "max_requests": 10,
+            "max_audio_duration": 100,
+            "features": [1],
+            "created": "2013-03-16T17:41:28+00:00",
+            "modified": "2013-03-16T17:41:28+00:00"
+        }
+    }
+]

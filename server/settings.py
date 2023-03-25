@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -43,8 +44,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    "rest_frameworks",
+    "rest_framework",
     "rest_framework_json_api",
+    "rest_framework_api_key",
     "apps.users",
     "apps.transcriber",
 ]
@@ -95,6 +97,7 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = "users.User"
+DEFAULT_SUBSCRIPTION_PLAN_ID = 1
 
 
 # Password validation
@@ -118,10 +121,13 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
     "DEFAULT_PARSER_CLASSES": (
-        # 'rest_framework.parsers.JSONParser',
+        "rest_framework.parsers.JSONParser",
         "rest_framework_json_api.parsers.JSONParser",
     ),
-    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework.authentication.SessionAuthentication",),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework_api_key.permissions.HasAPIKey",
+    ),
     "DEFAULT_RENDERER_CLASSES": (
         "rest_framework_json_api.renderers.JSONRenderer",
         # 'rest_framework.renderers.BrowsableAPIRenderer'

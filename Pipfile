@@ -7,13 +7,15 @@ name = "pypi"
 pylint-django = "*"
 pylint = "*"
 django-extensions = "*"
-django-rest-framework = "*"
 black = "*"
 djangorestframework-jsonapi = "*"
 djangorestframework = "*"
 django-filter = "*"
+mysqlclient = "*"
+djangorestframework-api-key = "*"
 
 [dev-packages]
+werkzeug = "*"
 
 [requires]
-python_version = "3.11"
+python_version = "3.*"
