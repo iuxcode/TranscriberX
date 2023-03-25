@@ -33,12 +33,24 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel, ActivatorModel)
 
 
 class APIKey(AbstractAPIKey):
+    name = models.CharField(
+        max_length=50,
+        blank=False,
+        default=None,
+        unique=True,
+        help_text=(
+            "A free-form name for the API key. " "Need not be unique. " "50 characters max."
+        ),
+    )
+
     class Meta:
         verbose_name = "APIKey"
         verbose_name_plural = "APIKeys"
 
 
-class Project(TimeStampedModel, ActivatorModel):
+class Project(TitleDescriptionModel, TimeStampedModel):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    title = models.CharField(max_length=255, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     api_key = models.ForeignKey(APIKey, on_delete=models.CASCADE)
 
@@ -75,6 +87,7 @@ class SubscriptionPlanFeature(TitleDescriptionModel, TimeStampedModel):
 class Usage(TimeStampedModel):
     """Store usage data for each user."""
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     user = models.ForeignKey("User", on_delete=models.CASCADE)
     endpoint = models.CharField(max_length=255)
     request_data = models.JSONField()
