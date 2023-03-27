@@ -15,7 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel, ActivatorModel)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(unique=True)
-    password = models.CharField(max_length=255)
+    password = models.CharField(max_length=255, blank=False, null=False)
     subscription_plan = models.ForeignKey("SubscriptionPlan", on_delete=models.PROTECT)
     is_staff = models.BooleanField(default=False)
 
@@ -33,6 +33,10 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel, ActivatorModel)
 
 
 class APIKey(AbstractAPIKey):
+    """
+    Store [project] API keys.
+    """
+
     name = models.CharField(
         max_length=50,
         blank=False,
@@ -49,6 +53,12 @@ class APIKey(AbstractAPIKey):
 
 
 class Project(TitleDescriptionModel, TimeStampedModel):
+    """
+    Store project information's.
+    * Each apps calling this API is considered as user project
+    * Each app (project) can use his [api_key] to authenticate his requests.
+    """
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     title = models.CharField(max_length=255, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

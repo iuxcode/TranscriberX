@@ -1,4 +1,3 @@
-from rest_framework import exceptions
 from rest_framework_json_api import serializers
 from server import settings
 from . import models
@@ -60,7 +59,7 @@ class APIKeySerializer(serializers.ModelSerializer):
 
 class ProjectSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source="title")
-    api_key = APIKeySerializer(read_only=True)
+    api_key = serializers.PrimaryKeyRelatedField(read_only=True)
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     user_id = serializers.UUIDField(write_only=True)
 
