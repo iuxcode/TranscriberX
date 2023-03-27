@@ -15,6 +15,9 @@
         "--django-settings-module=server.settings"
     ],
     "cSpell.words": [
-        "viewsets"
+        "pipenv",
+        "Pipfile",
+        "viewsets",
+        "virtualenvs"
     ]
 }
