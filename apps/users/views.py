@@ -1,3 +1,4 @@
+from django.shortcuts import get_list_or_404
 from rest_framework import viewsets, generics, exceptions
 from . import models
 from . import serializers
@@ -16,9 +17,7 @@ class UserProjectsAPIView(generics.ListAPIView):
         queryset = models.Project.objects.all()
         user_id = self.kwargs.get(self.lookup_url_kwarg)
 
-        if user_id is not None:
-            return queryset.filter(user_id=user_id)
-        raise exceptions.NotFound("User not found")
+        return get_list_or_404(queryset, user_id=user_id)
 
 
 class ProjectAPIViewSet(viewsets.ModelViewSet):

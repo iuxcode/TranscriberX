@@ -1,13 +1,13 @@
 import uuid
 from django.db import models
-from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import PermissionsMixin
 from django_extensions.db.models import TimeStampedModel, TitleDescriptionModel, ActivatorModel
 from rest_framework_api_key.models import AbstractAPIKey
 from .managers import UserManager
 
 
-class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel, ActivatorModel):
+class User(AbstractUser, PermissionsMixin, TimeStampedModel, ActivatorModel):
     """
     Store information about registered users.
     """
@@ -17,7 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel, ActivatorModel)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255, blank=False, null=False)
     subscription_plan = models.ForeignKey("SubscriptionPlan", on_delete=models.PROTECT)
-    is_staff = models.BooleanField(default=False)
+    created = None
 
     object = UserManager()
     EMAIL_FIELD = "email"

@@ -14,9 +14,14 @@
         "pylint_django",
         "--django-settings-module=server.settings"
     ],
+    "python.analysis.fixAll": [
+        "source.unusedImports",
+        "source.convertImportFormat"
+    ],
     "cSpell.words": [
         "pipenv",
         "Pipfile",
+        "simplejwt",
         "viewsets",
         "virtualenvs"
     ]

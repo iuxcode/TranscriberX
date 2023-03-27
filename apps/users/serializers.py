@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework_json_api import serializers
 from server import settings
 from . import models
@@ -49,6 +50,15 @@ class UserSerializer(serializers.ModelSerializer):
             "activate_date",
             "deactivate_date",
         ]
+
+    def validate_password(self, value: str) -> str:
+        """
+        Hash value passed by user.
+
+        :param value: password of a user
+        :return: a hashed version of the password
+        """
+        return make_password(value)
 
 
 class APIKeySerializer(serializers.ModelSerializer):
