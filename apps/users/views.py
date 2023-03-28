@@ -2,8 +2,7 @@ from django.shortcuts import get_list_or_404
 from rest_framework import viewsets, generics, exceptions, permissions
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
-from . import models
-from . import serializers
+from . import models, serializers
 
 
 class AuthenticationAPIViewSet(viewsets.GenericViewSet):

@@ -120,6 +120,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+TRANSCRIPTION_SUPPORTED_AUDIO = ["m4a", "mp3", "webm", "mp4", "mpga", "wav", "mpeg"]
+
+
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
     "DEFAULT_PARSER_CLASSES": [
@@ -200,6 +204,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 STATIC_URL = "static/"
+AUDIO_UPLOAD_URL = STATIC_URL + "audio/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

@@ -14,6 +14,8 @@ django-filter = "*"
 mysqlclient = "*"
 djangorestframework-api-key = "*"
 djangorestframework-simplejwt = "*"
+python-magic-bin = "*"
+openai = "*"
 
 [dev-packages]
 werkzeug = "*"

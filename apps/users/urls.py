@@ -17,6 +17,8 @@ urlpatterns = [
     path("token/verify", TokenVerifyView.as_view(), name="token_verify"),
     path("users", views.UserAPIViewSet.as_view({"get": "list"})),
     path("users/create", views.UserAPIViewSet.as_view({"post": "create"})),
+    path("users/update/<uuid:pk>", views.UserAPIViewSet.as_view({"patch": "partial_name"})),
+    path("users/delete/<uuid:pk>", views.UserAPIViewSet.as_view({"delete": "destroy"})),
     path("users/<uuid:pk>/projects", views.UserProjectsAPIView.as_view()),
     path("projects", views.ProjectAPIViewSet.as_view({"get": "list"})),
     path("projects/<uuid:pk>", views.ProjectAPIViewSet.as_view({"get": "retrieve"})),
