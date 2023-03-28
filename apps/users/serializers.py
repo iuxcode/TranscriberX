@@ -30,18 +30,18 @@ class SubscriptionPlanFeatureSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    api_key = serializers.CharField(read_only=True)
     subscription_plan = SubscriptionPlanSerializer(many=False, read_only=True)
     subscription_plan_id = serializers.IntegerField(
         write_only=True, default=settings.DEFAULT_SUBSCRIPTION_PLAN_ID
     )
+    password = serializers.CharField(write_only=True, required=True)
 
     class Meta:
         model = models.User
         fields = [
             "username",
             "email",
-            "api_key",
+            "password",
             "subscription_plan",
             "subscription_plan_id",
             "created",

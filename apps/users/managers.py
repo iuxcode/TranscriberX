@@ -1,4 +1,5 @@
 from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.hashers import make_password
 from server import settings
 from . import models
 
@@ -6,7 +7,7 @@ from . import models
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def _create_user(self, email, password, **extra_fields):
+    def _create_user(self, username, email, password, **extra_fields):
         """
         Creates and saves a User with the given email and password.
         """
@@ -25,21 +26,23 @@ class UserManager(BaseUserManager):
 
         email = self.normalize_email(email)
         user = self.model(
+            username=username,
             email=email,
             subscription_plan=subscription_plan,
             **extra_fields,
         )
-        user.set_password(password)
+        user.password = make_password(password)
 
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, username, password, email=None, **extra_fields):
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
-        return self._create_user(email, password, **extra_fields)
 
-    def create_superuser(self, email, password, **extra_fields):
+        return self._create_user(username, email, password, **extra_fields)
+
+    def create_superuser(self, username, password, email=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -48,4 +51,4 @@ class UserManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True")
 
-        return self._create_user(email, password, **extra_fields)
+        return self._create_user(username, email, password, **extra_fields)
