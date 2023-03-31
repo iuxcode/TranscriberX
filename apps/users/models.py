@@ -37,26 +37,6 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel, ActivatorModel)
         return f"{self.username} [{self.email}]"
 
 
-class APIKey(AbstractAPIKey):
-    """
-    Store [project] API keys.
-    """
-
-    name = models.CharField(
-        max_length=50,
-        blank=False,
-        default=None,
-        unique=True,
-        help_text=(
-            "A free-form name for the API key. " "Need not be unique. " "50 characters max."
-        ),
-    )
-
-    class Meta:
-        verbose_name = "APIKey"
-        verbose_name_plural = "APIKeys"
-
-
 class Project(TitleDescriptionModel, TimeStampedModel):
     """
     Store project information's.
@@ -67,7 +47,7 @@ class Project(TitleDescriptionModel, TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     title = models.CharField(max_length=255, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    api_key = models.ForeignKey(APIKey, on_delete=models.CASCADE)
+    api_key = models.TextField()
 
     class Meta:
         verbose_name = "Project"

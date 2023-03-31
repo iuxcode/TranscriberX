@@ -1,5 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework_json_api import serializers
+from rest_framework_api_key.models import APIKey
 from server import settings
 from . import models
 
@@ -61,17 +62,11 @@ class UserSerializer(serializers.ModelSerializer):
         return make_password(value)
 
 
-class APIKeySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.APIKey
-        fields = "__all__"
-
-
 class ProjectSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source="title")
-    api_key = serializers.PrimaryKeyRelatedField(read_only=True)
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     user_id = serializers.UUIDField(write_only=True)
+    api_key = serializers.CharField(read_only=True)
 
     class Meta:
         model = models.Project
@@ -79,9 +74,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         try:
-            api_key, _ = models.APIKey.objects.create_key(name=validated_data.get("title"))
-            print(_)
-            project = models.Project(**validated_data, api_key=api_key)
+            _, key = APIKey.objects.create_key(name=validated_data.get("title"))
+            project = models.Project(**validated_data, api_key=key)
             project.save()
             return project
         except Exception as e:

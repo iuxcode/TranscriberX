@@ -6,6 +6,7 @@ from server import settings
 from .services.ai import OpenAI
 from . import models, serializers
 
+
 class TranscriptionAPIViewSet(viewsets.ModelViewSet):
     queryset = models.Transcription.objects.all()
     serializer_class = serializers.TranscriptionSerializer

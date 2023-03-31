@@ -23,6 +23,5 @@ urlpatterns = [
     path("projects", views.ProjectAPIViewSet.as_view({"get": "list"})),
     path("projects/<uuid:pk>", views.ProjectAPIViewSet.as_view({"get": "retrieve"})),
     path("projects/create", views.ProjectAPIViewSet.as_view({"post": "create"})),
-    path("keys", views.APIKeyViewSet.as_view({"get": "list"})),
     path("subscriptions/plans", views.SubscriptionPlanViewSet.as_view({"get": "list"})),
 ]

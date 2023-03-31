@@ -89,14 +89,6 @@ class ProjectAPIViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.ProjectSerializer
 
 
-class APIKeyViewSet(viewsets.ModelViewSet):
-    queryset = models.APIKey.objects.all()
-    serializer_class = serializers.APIKeySerializer
-
-    def get_queryset(self):
-        return models.APIKey.objects.all()
-
-
 class SubscriptionPlanViewSet(viewsets.ModelViewSet):
     queryset = models.SubscriptionPlan.objects.all()
     serializer_class = serializers.SubscriptionPlanSerializer
