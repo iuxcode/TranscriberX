@@ -16,6 +16,7 @@ djangorestframework-api-key = "*"
 djangorestframework-simplejwt = "*"
 python-magic-bin = "*"
 openai = "*"
+channels = {extras = ["daphne"], version = "*"}
 
 [dev-packages]
 werkzeug = "*"
