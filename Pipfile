@@ -17,6 +17,7 @@ djangorestframework-simplejwt = "*"
 python-magic-bin = "*"
 openai = "*"
 channels = {extras = ["daphne"], version = "*"}
+ffmpeg-python = "*"
 
 [dev-packages]
 werkzeug = "*"

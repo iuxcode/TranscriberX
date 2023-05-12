@@ -1,4 +1,7 @@
+import base64
+import wave
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from server import settings
 from apps.transcriber.services.ai import OpenAI
 
 
@@ -55,6 +58,12 @@ class TranscriptConsumer(AsyncJsonWebsocketConsumer):
         else:
             await self.send_json(ResponseError("You must provide an valid action").to_json())
 
+    async def decode_b64_audio(self, b64_str):
+        file_path = f"{settings.AUDIO_UPLOAD_URL}/temp/current_live.wav"
+        decoded_data = base64.b64decode(b64_str)
+        with open(file_path, "wb") as file:
+            file.write(decoded_data)
+
     async def transcribe(self, content):
         if content is None:
             await self.send_json(
@@ -65,8 +74,8 @@ class TranscriptConsumer(AsyncJsonWebsocketConsumer):
             return
 
         chunk = content.get("chunk")
-
         if chunk is not None and len(chunk) > 0:
+            audio = await self.decode_b64_audio(chunk)
             await self.send_json(ResponseOk().to_json())
         else:
             await self.send_json(
